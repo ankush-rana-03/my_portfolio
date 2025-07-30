@@ -55,7 +55,7 @@ export default function Home() {
     {/* hamburger (shows ≤ md) */}
     <button
   onClick={() => setNavOpen(!navOpen)}
-  className={`md:hidden flex flex-col justify-center items-center w-10 h-10 rounded focus:outline-none transition duration-300 ${navOpen ? "bg-yellow-400 text-black" : "bg-transparent text-white"}`}
+  className={`md:hidden flex flex-col justify-center items-center w-10 h-10 rounded focus:outline-none transition duration-300 z-50 ${navOpen ? "bg-yellow-400 text-black" : "bg-transparent text-white"}`}
   aria-label="Toggle navigation"
 >
    {navOpen ? (
@@ -116,38 +116,47 @@ export default function Home() {
 
   {/* mobile slide‑over */}
   {navOpen && (
-  <nav
-    className="md:hidden fixed inset-y-0 right-0 w-32 bg-transparent text-white transition-transform duration-300 ease-in-out"
-  >
-    <ul className="mt-20 flex flex-col gap-6 px-6 text-lg font-medium bg-black">
-      {navItems.map((item) =>
-        item.scroll ? (
-          <li key={item.label}>
-            <ScrollLink
-              to={item.to}
-              smooth
-              duration={400}
-              onClick={() => setNavOpen(false)}
-              className="block hover:text-yellow-400"
-            >
-              {item.label}
-            </ScrollLink>
-          </li>
-        ) : (
-          <li key={item.label}>
-            <Link
-              href={item.href}
-              target="_blank"
-              onClick={() => setNavOpen(false)}
-              className="block hover:text-yellow-400"
-            >
-              {item.label}
-            </Link>
-          </li>
-        )
-      )}
-    </ul>
-  </nav>
+  <>
+    {/* Overlay background */}
+    <div 
+      className="md:hidden fixed inset-0 bg-black/50 z-30"
+      onClick={() => setNavOpen(false)}
+    ></div>
+    
+    {/* Mobile navigation menu */}
+    <nav
+      className="md:hidden fixed inset-y-0 right-0 w-64 bg-black/95 backdrop-blur text-white transition-transform duration-300 ease-in-out z-40"
+    >
+      <ul className="mt-20 flex flex-col gap-6 px-6 text-lg font-medium">
+        {navItems.map((item) =>
+          item.scroll ? (
+            <li key={item.label}>
+              <ScrollLink
+                to={item.to}
+                smooth
+                duration={400}
+                onClick={() => setNavOpen(false)}
+                className="block hover:text-yellow-400 cursor-pointer"
+              >
+                {item.label}
+              </ScrollLink>
+            </li>
+          ) : (
+            <li key={item.label}>
+              <Link
+                href={item.href}
+                target="_blank"
+                onClick={() => setNavOpen(false)}
+                className="block hover:text-yellow-400"
+              >
+                {item.label}
+              </Link>
+            </li>
+          )
+        )}
+      </ul>
+    </nav>
+  </>
 )}
 </header>
        
