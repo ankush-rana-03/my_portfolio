@@ -28,6 +28,14 @@ export default function Home() {
       easing: "ease-in-out",
       once: true,
     });
+    
+    // Reset scroll position to top on page load/refresh
+    window.scrollTo(0, 0);
+    
+    // Disable browser's scroll restoration
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
   },[])
 
   return (
