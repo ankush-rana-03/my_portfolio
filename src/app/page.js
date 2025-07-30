@@ -115,10 +115,9 @@ export default function Home() {
   </div>
 
   {/* mobile slide‑over */}
+  {navOpen && (
   <nav
-    className={`md:hidden fixed inset-y-0 right-0 w-32 bg-transparent text-white transform ${
-      navOpen ? "translate-x-0" : "translate-x-full"
-    } transition-transform duration-300 ease-in-out`}
+    className="md:hidden fixed inset-y-0 right-0 w-32 bg-transparent text-white transition-transform duration-300 ease-in-out"
   >
     <ul className="mt-20 flex flex-col gap-6 px-6 text-lg font-medium bg-black">
       {navItems.map((item) =>
@@ -149,6 +148,7 @@ export default function Home() {
       )}
     </ul>
   </nav>
+)}
 </header>
        
       <main className=" bg-black text-white w-full py-10 pt-10">
