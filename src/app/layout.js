@@ -1,33 +1,35 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({ 
   subsets: ["latin"],
+  variable: "--font-inter",
+  display: 'swap',
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const poppins = Poppins({ 
   subsets: ["latin"],
+  weight: ['300', '400', '500', '600', '700', '800'],
+  variable: "--font-poppins",
+  display: 'swap',
 });
 
 export const metadata = {
-  title: "Ankush Rana",
-  description: "Ankush Rana's portfolio app.",
+  title: "Ankush Rana - MERN Stack Developer | Portfolio",
+  description: "Professional MERN Stack Developer specializing in React, Next.js, Node.js, and MongoDB. Building scalable web applications with modern technologies.",
+  keywords: "MERN Stack Developer, React Developer, Next.js, Node.js, MongoDB, Full Stack Developer, Web Developer",
+  author: "Ankush Rana",
+  viewport: "width=device-width, initial-scale=1",
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
       <head>
-      <link
-          rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"
-        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${inter.className} antialiased`}>
         {children}
       </body>
     </html>
