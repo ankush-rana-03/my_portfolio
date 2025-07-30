@@ -58,7 +58,13 @@ export default function Home() {
   className={`md:hidden flex flex-col justify-center items-center w-10 h-10 rounded focus:outline-none transition duration-300 ${navOpen ? "bg-yellow-400 text-black" : "bg-transparent text-white"}`}
   aria-label="Toggle navigation"
 >
-  <div
+   {navOpen ? (
+        <X size={28} /> // Show cross icon when open
+          ) : (
+              <Menu size={28} /> // Show hamburger icon when closed
+                )}
+   
+  {/*<div
     className={`w-6 h-0.5 mb-1 bg-current transition-all duration-300 ${
       navOpen ? "transform rotate-45 translate-y-2" : ""
     }`}
@@ -72,7 +78,7 @@ export default function Home() {
     className={`w-6 h-0.5 bg-current transition-all duration-300 ${
       navOpen ? "transform -rotate-45 -translate-y-2" : ""
     }`}
-  ></div>
+  ></div>*/}
 </button>
 
     {/* desktop menu (hidden on mobile) */}
