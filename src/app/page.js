@@ -46,24 +46,24 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-  <header data-aos="zoom-in" className="fixed inset-x-0 top-0 z-50 bg-black/90 backdrop-blur border-b-2 border-yellow-300 shadow-md">
+    <header data-aos="zoom-in" className="fixed inset-x-0 top-0 z-50 bg-ocean-deep/95 backdrop-blur border-b-2 border-ocean-bright shadow-lg shadow-ocean-medium/20">
   <div className="container mx-auto flex h-16 items-center justify-between px-4 lg:px-6">
     {/* logo */}
     <ScrollLink
       to="hero"
       smooth
       duration={400}
-      className="cursor-pointer text-2xl font-bold text-yellow-500"
+      className="cursor-pointer text-2xl font-bold text-ocean-pale hover:text-ocean-light transition-colors duration-300"
       onClick={() => setNavOpen(false)}
     >
-      Ankush Rana
+      Ankush Rana
 
     </ScrollLink>
 
     {/* hamburger (shows ≤ md) */}
     <button
   onClick={() => setNavOpen(!navOpen)}
-  className={`md:hidden flex flex-col justify-center items-center w-10 h-10 rounded focus:outline-none transition duration-300 z-50 ${navOpen ? "bg-yellow-400 text-black" : "bg-transparent text-white"}`}
+  className={`md:hidden flex flex-col justify-center items-center w-10 h-10 rounded focus:outline-none transition duration-300 z-50 ${navOpen ? "bg-ocean-bright text-ocean-deep" : "bg-transparent text-ocean-pale"}`}
   aria-label="Toggle navigation"
 >
    {navOpen ? (
@@ -91,7 +91,7 @@ export default function Home() {
 
     {/* desktop menu (hidden on mobile) */}
     <nav className="hidden md:block">
-      <ul className="flex gap-8 text-white font-medium">
+      <ul className="flex gap-8 text-ocean-pale font-medium">
         {navItems.map((item) =>
           item.scroll ? (
             <li key={item.label}>
@@ -99,7 +99,7 @@ export default function Home() {
                 to={item.to}
                 smooth
                 duration={400}
-                className="hover:text-yellow-400 cursor-pointer"
+                className="hover:text-ocean-bright cursor-pointer transition-colors duration-300 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-ocean-bright after:transition-all after:duration-300 hover:after:w-full"
                 onClick={() => setNavOpen(false)} 
               >
                 {item.label}
@@ -110,7 +110,7 @@ export default function Home() {
               <Link
                 href={item.href}
                 target="_blank"
-                className="hover:text-yellow-400"
+                className="hover:text-ocean-bright transition-colors duration-300 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-ocean-bright after:transition-all after:duration-300 hover:after:w-full"
                 onClick={() => setNavOpen(false)}
               >
                 {item.label}
@@ -127,13 +127,13 @@ export default function Home() {
   <>
     {/* Overlay background */}
     <div 
-      className="md:hidden fixed inset-0 bg-black/50 z-30"
+      className="md:hidden fixed inset-0 bg-ocean-deep/70 backdrop-blur-sm z-30"
       onClick={() => setNavOpen(false)}
     ></div>
     
     {/* Mobile navigation menu */}
     <nav
-      className="md:hidden fixed inset-y-0 right-0 w-64 bg-black/95 backdrop-blur text-white transition-transform duration-300 ease-in-out z-40"
+      className="md:hidden fixed inset-y-0 right-0 w-64 bg-ocean-gradient-dark backdrop-blur text-ocean-pale transition-transform duration-300 ease-in-out z-40 shadow-2xl shadow-ocean-deep/50"
     >
       <ul className="mt-20 flex flex-col gap-6 px-6 text-lg font-medium">
         {navItems.map((item) =>
@@ -144,7 +144,7 @@ export default function Home() {
                 smooth
                 duration={400}
                 onClick={() => setNavOpen(false)}
-                className="block hover:text-yellow-400 cursor-pointer"
+                className="block hover:text-ocean-bright cursor-pointer transition-colors duration-300 py-2 px-3 rounded-lg hover:bg-ocean-medium/30"
               >
                 {item.label}
               </ScrollLink>
@@ -155,7 +155,7 @@ export default function Home() {
                 href={item.href}
                 target="_blank"
                 onClick={() => setNavOpen(false)}
-                className="block hover:text-yellow-400"
+                className="block hover:text-ocean-bright transition-colors duration-300 py-2 px-3 rounded-lg hover:bg-ocean-medium/30"
               >
                 {item.label}
               </Link>
@@ -168,15 +168,15 @@ export default function Home() {
 )}
 </header>
        
-      <main className=" bg-black text-white w-full py-10 pt-10">
+      <main className="bg-transparent text-ocean-pale w-full py-10 pt-10">
         {/*hero section */}
         <section id="hero" className="flex flex-col md:flex-row items-center justify-between mx-4 md:mx-10 py-10 mt-10">
           <div className='text-left w-full md:w-1/2'>
-          <h2 data-aos="fade-right" data-aos-duration="800" className="text-5xl font-extrabold">Hi, I am </h2>
-          <h1 data-aos="fade-right" data-aos-duration="1000" className="text-6xl font-extrabold text-yellow-400">Ankush Rana,</h1>
+          <h2 data-aos="fade-right" data-aos-duration="800" className="text-5xl font-extrabold text-ocean-pale">Hi, I am </h2>
+          <h1 data-aos="fade-right" data-aos-duration="1000" className="text-6xl font-extrabold bg-gradient-to-r from-ocean-bright to-ocean-light bg-clip-text text-transparent">Ankush Rana,</h1>
           <div data-aos="zoom-in-right" data-aos-duration="500">
-          <h2 className="mt-3 text-3xl font-bold">
-             I'm a <span className="text-purple-600">
+          <h2 className="mt-3 text-3xl font-bold text-ocean-pale">
+             I'm a <span className="bg-gradient-to-r from-ocean-light to-ocean-bright bg-clip-text text-transparent">
              <Typewriter
                 words={['MERN Stack Developer', 'React Developer', 'Node.js Developer']}
                 loop={0} // Infinite loop
@@ -189,12 +189,12 @@ export default function Home() {
                  </span>
           </h2>
           
-          <h2 className="text-2xl font-bold">Building scalable and efficient web applications using <br/> ReactJs, NextJs, NodeJs, Express and MongoDb.</h2>
+          <h2 className="text-2xl font-bold text-ocean-pale/90">Building scalable and efficient web applications using <br/> <span className="text-ocean-bright">ReactJs, NextJs, NodeJs, Express</span> and <span className="text-ocean-bright">MongoDb</span>.</h2>
           </div>
           </div>
 
           <div data-aos="fade-left" className='w-full md:w-1/2 flex justify-center m-10'>
-            <img src='/computer1.jpg' alt="profile" className='w-50 h-50 shadow-lg' />
+            <img src='/computer1.jpg' alt="profile" className='w-50 h-50 shadow-2xl shadow-ocean-medium/30 rounded-lg border-2 border-ocean-bright/30 hover:shadow-ocean-bright/20 transition-all duration-300' />
           </div>
         </section>
 
