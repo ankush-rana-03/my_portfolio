@@ -201,7 +201,7 @@ export default function Home() {
           </p>
 
           <div data-aos="zoom-out" className='mt-8'>
-           <a href='/Ramdas Singh D.pdf' download className='bg-yellow-500 text-black px-6 py-3 text-lg font-semibold rounded-lg shadow-lg hover:bg-yellow-400 transition duration-300'>
+           <a href='/RESUME ANKUSH RANA.pdf' download className='bg-yellow-500 text-black px-6 py-3 text-lg font-semibold rounded-lg shadow-lg hover:bg-yellow-400 transition duration-300'>
            📄 Download CV
            </a>
           </div>
