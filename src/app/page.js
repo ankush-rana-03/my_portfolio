@@ -150,7 +150,7 @@ export default function Home() {
         <section id="hero" className="flex flex-col md:flex-row items-center justify-between mx-4 md:mx-10 py-10 mt-10">
           <div className='text-left w-full md:w-1/2'>
           <h2 data-aos="fade-right" data-aos-duration="800" className="text-5xl font-extrabold">Hi, I am </h2>
-          <h1 data-aos="fade-right" data-aos-duration="1000" className="text-6xl font-extrabold text-yellow-400">Ramdas Singh,</h1>
+          <h1 data-aos="fade-right" data-aos-duration="1000" className="text-6xl font-extrabold text-yellow-400">Ankush Rana,</h1>
           <div data-aos="zoom-in-right" data-aos-duration="500">
           <h2 className="mt-3 text-3xl font-bold">
              I'm a <span className="text-purple-600">
