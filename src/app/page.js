@@ -17,8 +17,8 @@ export default function Home() {
     { to: "about", label: "About", scroll: true },
     { to: "skills", label: "Skills", scroll: true },
     { to: "projects", label: "Projects", scroll: true },
-    { href: "https://www.linkedin.com/in/ramdas-singh/", label: "LinkedIn" },
-    { href: "https://github.com/Ramdas-developer", label: "GitHub" },
+    { href: "https://www.linkedin.com/in/ankush-rana-bb8b3a19a/", label: "LinkedIn" },
+    { href: "https://github.com/ankush-rana-03", label: "GitHub" },
   ];
   const [navOpen, setNavOpen] = useState(false);
 
@@ -48,7 +48,8 @@ export default function Home() {
       className="cursor-pointer text-2xl font-bold text-yellow-500"
       onClick={() => setNavOpen(false)}
     >
-      Ramdas Singh
+      Ankush Rana
+
     </ScrollLink>
 
     {/* hamburger (shows ≤ md) */}
@@ -178,7 +179,7 @@ export default function Home() {
         <section data-aos="fade-down" id="about" className="text-left mx-10 py-20 mt-20">
           <h1 data-aos="zoom-out" className="text-6xl text-center font-bold mb-8">About Me</h1>
           <h2 className="text-4xl font-bold">
-             Hey, I'm <span className="text-yellow-400">Ramdas Singh</span><br/>
+             Hey, I'm <span className="text-yellow-400">Ankush Rana</span><br/>
              <span className="text-purple-600"> MERN Stack Developer</span><br/> 
              who thrives on building high-performance,<br/> scalable, and user-centric applications.
           </h2>
@@ -261,20 +262,20 @@ export default function Home() {
 
       <footer className="bg-gray-900 text-white text-center p-4">
       <div className="flex justify-center space-x-6 mb-3">
-    <a data-aos="fade-up" data-aos-anchor-placement="top-bottom" data-aos-duration="700" data-aos-delay="300" href="https://wa.me/9877323956" target="_blank" rel="noopener noreferrer" className="text-green-600 text-4xl hover:text-green-500 aos-init aos-animate">
+    <a data-aos="fade-up" data-aos-anchor-placement="top-bottom" data-aos-duration="700" data-aos-delay="300" href="https://wa.me/8264987650" target="_blank" rel="noopener noreferrer" className="text-green-600 text-4xl hover:text-green-500 aos-init aos-animate">
       <FaWhatsapp />
     </a>
-    <a data-aos="fade-up" data-aos-anchor-placement="top-bottom" data-aos-duration="700" data-aos-delay="400" href="https://github.com/Ramdas-developer" target="_blank" rel="noopener noreferrer" className="text-gray-400 text-4xl hover:text-gray-500">
+    <a data-aos="fade-up" data-aos-anchor-placement="top-bottom" data-aos-duration="700" data-aos-delay="400" href="https://github.com/ankush-rana-03" target="_blank" rel="noopener noreferrer" className="text-gray-400 text-4xl hover:text-gray-500">
       <FaGithub />
     </a>
-    <a data-aos="fade-up" data-aos-anchor-placement="top-bottom" data-aos-duration="700" data-aos-delay="500" href="https://www.linkedin.com/in/ramdas-singh/" target="_blank" rel="noopener noreferrer" className="text-blue-400 text-4xl hover:text-blue-500">
+    <a data-aos="fade-up" data-aos-anchor-placement="top-bottom" data-aos-duration="700" data-aos-delay="500" href="https://www.linkedin.com/in/ankush-rana-bb8b3a19a/" target="_blank" rel="noopener noreferrer" className="text-blue-400 text-4xl hover:text-blue-500">
       <FaLinkedin />
     </a>
-    <a data-aos="fade-up" data-aos-anchor-placement="top-bottom" data-aos-duration="700" data-aos-delay="600" href="mailto:ramdassinghmt30@gmail.com" className="text-red-400 text-4xl hover:text-red-500" target="_blank" rel="noopener noreferrer">
+    <a data-aos="fade-up" data-aos-anchor-placement="top-bottom" data-aos-duration="700" data-aos-delay="600" href="mailto:ankushrana30@gmail.com" className="text-red-400 text-4xl hover:text-red-500" target="_blank" rel="noopener noreferrer">
       <FaEnvelope />
     </a>
   </div>
-        {/* <p>&copy; 2025 Your Name. All rights reserved.</p> */}
+        {<p>&copy; 2025 Made with ♥️ by Ankush Rana. All rights reserved.</p> }
 
       </footer>
     </>
