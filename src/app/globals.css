@@ -3,44 +3,144 @@
 @tailwind utilities;
 
 :root {
-  --background: #03045E;
-  --foreground: #CAF0F8;
-  --ocean-deep: #03045E;
-  --ocean-medium: #0077B6;
-  --ocean-bright: #00B4D8;
-  --ocean-light: #90E0EF;
-  --ocean-pale: #CAF0F8;
+  /* Enhanced Color Palette */
+  --background: #0a0e27;
+  --foreground: #f8fafc;
+  
+  /* Professional Ocean Theme */
+  --ocean-deep: #0a0e27;        /* Deep navy - professional background */
+  --ocean-darker: #1e293b;      /* Darker blue-gray */
+  --ocean-medium: #334155;      /* Medium slate */
+  --ocean-bright: #0ea5e9;      /* Professional sky blue */
+  --ocean-light: #38bdf8;       /* Light blue */
+  --ocean-pale: #e0f2fe;        /* Very light blue */
+  --ocean-accent: #06b6d4;      /* Cyan accent */
+  
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 50%, #38bdf8 100%);
+  --gradient-secondary: linear-gradient(135deg, #0a0e27 0%, #1e293b 50%, #334155 100%);
+  --gradient-accent: linear-gradient(135deg, #06b6d4 0%, #0ea5e9 100%);
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-glow: 0 0 20px rgba(14, 165, 233, 0.3);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #03045E;
-    --foreground: #CAF0F8;
+    --background: #0a0e27;
+    --foreground: #f8fafc;
   }
+}
+
+/* Base Styles */
+* {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
 body {
   color: var(--foreground);
-  background: linear-gradient(135deg, #03045E 0%, #0077B6 25%, #00B4D8 50%, #90E0EF 100%);
+  background: linear-gradient(135deg, 
+    #0a0e27 0%, 
+    #1e293b 25%, 
+    #334155 50%, 
+    #1e293b 75%, 
+    #0a0e27 100%);
   background-attachment: fixed;
   min-height: 100vh;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.6;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Custom scrollbar styling */
+/* Typography Enhancements */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #03045E;
+  background: var(--ocean-deep);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #00B4D8, #90E0EF);
+  background: var(--gradient-primary);
   border-radius: 4px;
+  transition: all 0.3s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #90E0EF, #CAF0F8);
+  background: var(--gradient-accent);
+  box-shadow: var(--shadow-glow);
+}
+
+/* Selection Styling */
+::selection {
+  background: rgba(14, 165, 233, 0.3);
+  color: var(--ocean-pale);
+}
+
+::-moz-selection {
+  background: rgba(14, 165, 233, 0.3);
+  color: var(--ocean-pale);
+}
+
+/* Focus Styles for Accessibility */
+:focus-visible {
+  outline: 2px solid var(--ocean-bright);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Utility Classes */
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-ocean-bright to-ocean-accent bg-clip-text text-transparent;
+  }
+  
+  .text-gradient-reverse {
+    @apply bg-gradient-to-r from-ocean-accent to-ocean-bright bg-clip-text text-transparent;
+  }
+  
+  .shadow-glow {
+    box-shadow: var(--shadow-glow);
+  }
+  
+  .shadow-glow-hover:hover {
+    box-shadow: var(--shadow-glow);
+  }
+  
+  .backdrop-blur-glass {
+    backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgba(10, 14, 39, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.125);
+  }
+  
+  .card-glass {
+    background: rgba(30, 41, 59, 0.4);
+    backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+  
+  .btn-primary {
+    @apply bg-gradient-to-r from-ocean-bright to-ocean-accent text-white font-semibold px-6 py-3 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-glow border border-ocean-bright/30;
+  }
+  
+  .btn-secondary {
+    @apply border border-ocean-bright/50 text-ocean-bright font-semibold px-6 py-3 rounded-lg transition-all duration-300 hover:bg-ocean-bright/10 hover:border-ocean-bright hover:shadow-glow;
+  }
 }
