@@ -149,8 +149,20 @@ h1, h2, h3, h4, h5, h6 {
   .backdrop-blur-glass {
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    background: rgba(10, 14, 39, 0.8);
+    background: rgba(10, 14, 39, 0.95);
     border: 1px solid rgba(14, 165, 233, 0.1);
+  }
+  
+  /* Fallback for browsers that don't support backdrop-filter */
+  @supports not (backdrop-filter: blur(16px)) {
+    .backdrop-blur-glass {
+      background: rgba(10, 14, 39, 0.98);
+    }
+  }
+  
+  /* Ensure navbar has solid background */
+  header.backdrop-blur-glass {
+    background: rgba(10, 14, 39, 0.98) !important;
   }
 
   .card-glass {
@@ -270,6 +282,7 @@ h1, h2, h3, h4, h5, h6 {
   .backdrop-blur-glass {
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
+    background: rgba(10, 14, 39, 0.95);
   }
 
   .card-glass {
