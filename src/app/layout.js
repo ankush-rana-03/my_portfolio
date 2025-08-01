@@ -19,7 +19,13 @@ export const metadata = {
   description: "Professional MERN Stack Developer specializing in React, Next.js, Node.js, and MongoDB. Building scalable web applications with modern technologies.",
   keywords: "MERN Stack Developer, React Developer, Next.js, Node.js, MongoDB, Full Stack Developer, Web Developer",
   author: "Ankush Rana",
-  viewport: "width=device-width, initial-scale=1",
+};
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default function RootLayout({ children }) {
