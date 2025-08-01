@@ -4,10 +4,113 @@ import Link from 'next/link';
 import { Link as ScrollLink } from 'react-scroll';
 import { Typewriter } from 'react-simple-typewriter';
 import { FaGithub, FaLinkedin, FaWhatsapp, FaEnvelope, FaDownload, FaCode, FaDatabase, FaReact } from "react-icons/fa";
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, memo } from 'react';
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { Menu, X, ExternalLink } from "lucide-react";
+
+// Water Ripple Effect Component - Memoized for performance
+const WaterRipple = memo(() => {
+  const canvasRef = useRef(null);
+  const contextRef = useRef(null);
+  const ripplesRef = useRef([]);
+  const animationIdRef = useRef(null);
+  const lastMouseMoveRef = useRef(0);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const context = canvas.getContext('2d');
+    
+    // Set canvas size
+    const resizeCanvas = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+    
+    contextRef.current = context;
+    
+    // Throttled mouse move handler for better performance
+    const handleMouseMove = (e) => {
+      const now = Date.now();
+      if (now - lastMouseMoveRef.current < 50) return; // Throttle to 20fps
+      lastMouseMoveRef.current = now;
+      
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      // Limit number of ripples for performance
+      if (ripplesRef.current.length < 10) {
+        ripplesRef.current.push({
+          x,
+          y,
+          radius: 0,
+          maxRadius: Math.random() * 80 + 40,
+          speed: Math.random() * 1.5 + 0.5,
+          opacity: 1,
+          color: `hsl(${200 + Math.random() * 40}, 70%, 60%)`
+        });
+      }
+    };
+    
+    canvas.addEventListener('mousemove', handleMouseMove, { passive: true });
+    
+    // Animation loop with performance optimization
+    const animate = () => {
+      const context = contextRef.current;
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      
+      // Update and draw ripples
+      ripplesRef.current = ripplesRef.current.filter(ripple => {
+        ripple.radius += ripple.speed;
+        ripple.opacity -= 0.015; // Slower fade for smoother effect
+        
+        if (ripple.opacity > 0) {
+          context.beginPath();
+          context.arc(ripple.x, ripple.y, ripple.radius, 0, 2 * Math.PI);
+          context.strokeStyle = `rgba(14, 165, 233, ${ripple.opacity * 0.25})`;
+          context.lineWidth = 1.5;
+          context.stroke();
+          
+          // Inner ripple
+          if (ripple.radius > 10) {
+            context.beginPath();
+            context.arc(ripple.x, ripple.y, ripple.radius * 0.6, 0, 2 * Math.PI);
+            context.strokeStyle = `rgba(56, 189, 248, ${ripple.opacity * 0.15})`;
+            context.lineWidth = 1;
+            context.stroke();
+          }
+          
+          return true;
+        }
+        return false;
+      });
+      
+      animationIdRef.current = requestAnimationFrame(animate);
+    };
+    
+    animate();
+    
+    return () => {
+      window.removeEventListener('resize', resizeCanvas);
+      canvas.removeEventListener('mousemove', handleMouseMove);
+      if (animationIdRef.current) {
+        cancelAnimationFrame(animationIdRef.current);
+      }
+    };
+  }, []);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="fixed inset-0 pointer-events-none z-10 opacity-25"
+      style={{ mixBlendMode: 'screen' }}
+    />
+  );
+});
 
 export default function Home() {
 
@@ -16,17 +119,28 @@ export default function Home() {
     { to: "about", label: "About", scroll: true },
     { to: "skills", label: "Skills", scroll: true },
     { to: "projects", label: "Projects", scroll: true },
-    { href: "https://www.linkedin.com/in/ankush-rana-bb8b3a19a/", label: "LinkedIn" },
-    { href: "https://github.com/ankush-rana-03", label: "GitHub" },
   ];
+
+  const socialItems = [
+    { href: "https://www.linkedin.com/in/ankush-rana-bb8b3a19a/", label: "LinkedIn", icon: FaLinkedin },
+    { href: "https://github.com/ankush-rana-03", label: "GitHub", icon: FaGithub },
+  ];
+
   const [navOpen, setNavOpen] = useState(false);
 
   useEffect(()=>{
-    AOS.init({
-      duration: 1000,
-      easing: "ease-in-out",
-      once: true,
-    });
+    // Lazy initialize AOS for better performance
+    const initAOS = () => {
+      AOS.init({
+        duration: 1000,
+        easing: "ease-in-out",
+        once: true,
+        disable: window.innerWidth < 768, // Disable on mobile for better performance
+      });
+    };
+
+    // Initialize AOS after a small delay to prioritize critical content
+    const timer = setTimeout(initAOS, 100);
     
     // Reset scroll position to top on page load/refresh
     window.scrollTo(0, 0);
@@ -35,6 +149,8 @@ export default function Home() {
     if ('scrollRestoration' in history) {
       history.scrollRestoration = 'manual';
     }
+
+    return () => clearTimeout(timer);
   },[])
 
   return (
@@ -44,6 +160,9 @@ export default function Home() {
         <meta name="description" content="Professional MERN Stack Developer Portfolio - React, Next.js, Node.js, MongoDB" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
+      {/* Water Ripple Effect */}
+      <WaterRipple />
 
     <header data-aos="zoom-in" className="fixed inset-x-0 top-0 z-50 backdrop-blur-glass border-b border-ocean-bright/20 shadow-lg">
   <div className="container mx-auto flex h-16 sm:h-20 items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -73,34 +192,36 @@ export default function Home() {
 
     {/* desktop menu (hidden on mobile) */}
     <nav className="hidden md:block">
-      <ul className="flex gap-6 lg:gap-8 text-ocean-pale font-medium font-inter">
-        {navItems.map((item) =>
-          item.scroll ? (
-            <li key={item.label}>
-              <ScrollLink
-                to={item.to}
-                smooth
-                duration={400}
-                className="hover:text-ocean-bright cursor-pointer transition-all duration-300 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-gradient-primary after:transition-all after:duration-300 hover:after:w-full py-2 px-1 text-sm lg:text-base"
-                onClick={() => setNavOpen(false)} 
-              >
-                {item.label}
-              </ScrollLink>
-            </li>
-          ) : (
-            <li key={item.label}>
-              <Link
-                href={item.href}
-                target="_blank"
-                className="hover:text-ocean-bright transition-all duration-300 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-gradient-primary after:transition-all after:duration-300 hover:after:w-full py-2 px-1 inline-flex items-center gap-1 text-sm lg:text-base"
-                onClick={() => setNavOpen(false)}
-              >
-                {item.label}
-                <ExternalLink size={12} className="lg:w-3.5 lg:h-3.5" />
-              </Link>
-            </li>
-          )
-        )}
+      <ul className="flex gap-6 lg:gap-8 text-ocean-pale font-medium font-inter items-center">
+        {navItems.map((item) => (
+          <li key={item.label}>
+            <ScrollLink
+              to={item.to}
+              smooth
+              duration={400}
+              className="hover:text-ocean-bright cursor-pointer transition-all duration-300 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-gradient-primary after:transition-all after:duration-300 hover:after:w-full py-2 px-1 text-sm lg:text-base"
+              onClick={() => setNavOpen(false)} 
+            >
+              {item.label}
+            </ScrollLink>
+          </li>
+        ))}
+        
+        {/* Social buttons aligned with nav items */}
+        {socialItems.map((item) => (
+          <li key={item.label}>
+            <Link
+              href={item.href}
+              target="_blank"
+              className="hover:text-ocean-bright transition-all duration-300 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-gradient-primary after:transition-all after:duration-300 hover:after:w-full py-2 px-1 inline-flex items-center gap-1 text-sm lg:text-base"
+              onClick={() => setNavOpen(false)}
+            >
+              <item.icon size={16} className="lg:w-4 lg:h-4" />
+              {item.label}
+              <ExternalLink size={12} className="lg:w-3.5 lg:h-3.5" />
+            </Link>
+          </li>
+        ))}
       </ul>
     </nav>
   </div>
@@ -119,33 +240,34 @@ export default function Home() {
       className="md:hidden fixed inset-y-0 right-0 w-72 sm:w-80 backdrop-blur-glass text-ocean-pale transition-transform duration-300 ease-in-out z-40 shadow-glass"
     >
       <ul className="mt-20 sm:mt-24 flex flex-col gap-2 sm:gap-4 px-6 sm:px-8 text-base sm:text-lg font-medium font-inter">
-        {navItems.map((item) =>
-          item.scroll ? (
-            <li key={item.label}>
-              <ScrollLink
-                to={item.to}
-                smooth
-                duration={400}
-                onClick={() => setNavOpen(false)}
-                className="block hover:text-ocean-bright cursor-pointer transition-all duration-300 py-3 px-4 rounded-xl hover:bg-ocean-medium/20 hover:shadow-glow-hover"
-              >
-                {item.label}
-              </ScrollLink>
-            </li>
-          ) : (
-            <li key={item.label}>
-              <Link
-                href={item.href}
-                target="_blank"
-                onClick={() => setNavOpen(false)}
-                className="block hover:text-ocean-bright transition-all duration-300 py-3 px-4 rounded-xl hover:bg-ocean-medium/20 hover:shadow-glow-hover inline-flex items-center gap-2"
-              >
-                {item.label}
-                <ExternalLink size={16} />
-              </Link>
-            </li>
-          )
-        )}
+        {navItems.map((item) => (
+          <li key={item.label}>
+            <ScrollLink
+              to={item.to}
+              smooth
+              duration={400}
+              onClick={() => setNavOpen(false)}
+              className="block hover:text-ocean-bright cursor-pointer transition-all duration-300 py-3 px-4 rounded-xl hover:bg-ocean-medium/20 hover:shadow-glow-hover"
+            >
+              {item.label}
+            </ScrollLink>
+          </li>
+        ))}
+        
+        {socialItems.map((item) => (
+          <li key={item.label}>
+            <Link
+              href={item.href}
+              target="_blank"
+              onClick={() => setNavOpen(false)}
+              className="block hover:text-ocean-bright transition-all duration-300 py-3 px-4 rounded-xl hover:bg-ocean-medium/20 hover:shadow-glow-hover inline-flex items-center gap-2"
+            >
+              <item.icon size={16} />
+              {item.label}
+              <ExternalLink size={16} />
+            </Link>
+          </li>
+        ))}
       </ul>
     </nav>
   </>
@@ -213,11 +335,26 @@ export default function Home() {
 
           <div data-aos="fade-left" className='w-full lg:w-1/2 flex justify-center mt-8 sm:mt-12 lg:mt-0'>
             <div className="relative">
-              <img 
-                src='/computer1.jpg' 
-                alt="Ankush Rana - MERN Stack Developer" 
-                className='w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-80 lg:h-80 xl:w-96 xl:h-96 object-cover rounded-2xl shadow-glass border border-ocean-bright/30 hover:shadow-glow-lg transition-all duration-500 transform hover:scale-105' 
-              />
+              {/* Replace computer image with a modern 3D-style developer illustration */}
+              <div className="w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-80 lg:h-80 xl:w-96 xl:h-96 rounded-2xl shadow-glass border border-ocean-bright/30 hover:shadow-glow-lg transition-all duration-500 transform hover:scale-105 overflow-hidden bg-gradient-to-br from-ocean-bright/20 to-ocean-accent/20 backdrop-blur-sm">
+                <div className="w-full h-full flex items-center justify-center">
+                  <div className="text-center space-y-4">
+                    <div className="w-24 h-24 sm:w-32 sm:h-32 mx-auto bg-gradient-primary rounded-full flex items-center justify-center shadow-glow animate-glow">
+                      <FaCode className="text-white text-3xl sm:text-4xl" />
+                    </div>
+                    <div className="space-y-2">
+                      <div className="w-32 h-2 bg-gradient-primary rounded-full mx-auto animate-pulse"></div>
+                      <div className="w-24 h-2 bg-gradient-accent rounded-full mx-auto animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+                      <div className="w-28 h-2 bg-gradient-primary rounded-full mx-auto animate-pulse" style={{ animationDelay: '1s' }}></div>
+                    </div>
+                    <div className="flex justify-center space-x-2">
+                      <FaReact className="text-ocean-bright text-xl animate-spin" style={{ animationDuration: '3s' }} />
+                      <FaDatabase className="text-ocean-accent text-xl animate-bounce" style={{ animationDelay: '0.5s' }} />
+                      <FaCode className="text-ocean-light text-xl animate-pulse" />
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div className="absolute -inset-1 bg-gradient-primary rounded-2xl blur opacity-30 animate-glow"></div>
             </div>
           </div>
@@ -402,7 +539,7 @@ export default function Home() {
                 },
                 { 
                   title: 'Blog CMS', 
-                  img: '/computer1.jpg', 
+                  img: '/HRMS view.png', 
                   link: 'https://blogcms.example.com',
                   description: 'A full-featured Content Management System for blogs with rich text editor, user authentication, and SEO optimization.'
                 }
@@ -412,7 +549,12 @@ export default function Home() {
                     <img 
                       src={project.img} 
                       alt={project.title} 
+                      loading="lazy"
                       className="w-full h-40 sm:h-48 object-cover transition-transform duration-300 group-hover:scale-110" 
+                      onLoad={(e) => {
+                        e.target.style.opacity = '1';
+                      }}
+                      style={{ opacity: 0, transition: 'opacity 0.3s ease-in-out' }}
                     />
                     <div className="absolute inset-0 bg-gradient-primary opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
                   </div>
