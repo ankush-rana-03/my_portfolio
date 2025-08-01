@@ -167,8 +167,8 @@ export default function Home() {
       <WaterRipple />
 
       {/* Professional Header with Improved Mobile Navigation */}
-      <header className="fixed inset-x-0 top-0 z-50 backdrop-blur-glass border-b border-ocean-bright/20 shadow-lg">
-        <div className="container mx-auto flex h-16 sm:h-20 items-center justify-between px-4 sm:px-6 lg:px-8">
+      <header className="fixed inset-x-0 top-0 z-50 backdrop-blur-glass border-b border-ocean-bright/20 shadow-lg w-full bg-ocean-deep/95">
+        <div className="w-full max-w-7xl mx-auto flex h-16 sm:h-20 items-center justify-between px-4 sm:px-6 lg:px-8">
           {/* Logo */}
           <ScrollLink
             to="hero"
@@ -240,7 +240,7 @@ export default function Home() {
             />
             
             {/* Mobile Navigation Menu */}
-            <nav className="lg:hidden fixed inset-y-0 right-0 w-80 sm:w-96 backdrop-blur-glass text-ocean-pale transition-transform duration-300 ease-in-out z-50 shadow-glass border-l border-ocean-bright/20">
+            <nav className="lg:hidden fixed inset-y-0 right-0 w-80 sm:w-96 backdrop-blur-glass text-ocean-pale transition-transform duration-300 ease-in-out z-50 shadow-glass border-l border-ocean-bright/20 bg-ocean-deep/95">
               <div className="flex flex-col h-full">
                 {/* Mobile Menu Header */}
                 <div className="flex items-center justify-between p-6 border-b border-ocean-bright/20">
