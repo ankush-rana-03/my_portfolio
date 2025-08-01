@@ -168,7 +168,7 @@ export default function Home() {
 
       {/* Professional Header with Improved Mobile Navigation */}
       <header className="fixed inset-x-0 top-0 z-50 backdrop-blur-glass border-b border-ocean-bright/20 shadow-lg w-full bg-ocean-deep/95">
-        <div className="w-full max-w-7xl mx-auto flex h-16 sm:h-20 items-center justify-between px-4 sm:px-6 lg:px-8">
+        <div className="w-full flex h-16 sm:h-20 items-center justify-between px-4 sm:px-6 lg:px-8">
           {/* Logo */}
           <ScrollLink
             to="hero"
