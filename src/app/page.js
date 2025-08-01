@@ -167,7 +167,7 @@ export default function Home() {
       <WaterRipple />
 
       {/* Professional Header with Improved Mobile Navigation */}
-      <header className="fixed inset-x-0 top-0 z-50 backdrop-blur-glass border-b border-ocean-bright/20 shadow-lg w-full bg-ocean-deep/95">
+      <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-glass border-b border-ocean-bright/20 shadow-lg bg-ocean-deep/95">
         <div className="w-full flex h-16 sm:h-20 items-center justify-between px-4 sm:px-6 lg:px-8">
           {/* Logo */}
           <ScrollLink
